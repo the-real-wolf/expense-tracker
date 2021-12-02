@@ -1,0 +1,34 @@
+<ion-header>
+  <div class="login-header ion-padding">
+    <img class="logo-img" src="assets/img/logo.png">
+  </div>
+</ion-header>
+
+<ion-content>
+  <div class="center">
+    <h1 class="product-name">Expense Tracker</h1>
+    <div class="heading-column-lr">
+        <h1 class="big-heading">Login</h1>
+        <h2 class="small-heading">SIGN UP</h2>
+    </div>
+
+    <!-- <ion-label>Lorem ipsum is simply dummy text of the printig and typesetting industry.</ion-label> -->
+    
+    <ion-item class="transparent">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-input [(ngModel)]="email" placeholder="E-Mail" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+      <ion-icon name="lock-closed-outline"></ion-icon>
+      <ion-input [(ngModel)]="password" placeholder="Password" type="password"></ion-input>
+    </ion-item>
+
+    <ion-label class="forgot-password">Forgot Password?</ion-label>
+
+    <div class="linespace"></div>
+
+    <ion-button color="primary" class="ion-button-class" shape="round" fill="solid" size="large" expand="block" (click)="login()">LOGIN</ion-button>
+    <ion-label class="ion-text-center">Don't have an Account? <span class="link-button" (click)="register()">Sign Up</span></ion-label>
+  </div>
+</ion-content>
