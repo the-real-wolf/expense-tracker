@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="theme">
+    <ion-buttons slot="start">
+      <ion-menu-button color="dark"></ion-menu-button>   
+    </ion-buttons>
+    
+    <ion-title>Categories</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-card *ngFor="let category of categories">
+      <ion-card-header>
+        <ion-card-title>{{category.name}}
+        <ion-icon style="float: right;" [style.fontSize.px]="25" name="trash-outline" color="danger" (click)="showDeleteDialog(category.ident)"></ion-icon>  
+        <ion-icon style="float: right; margin-right: 5px;" [style.fontSize.px]="25" name="settings-outline" color="dark" (click)="editCategory(category.ident)"></ion-icon>
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>{{category.description}}</ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="theme" (click)="createCategory()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  
+</ion-content>
