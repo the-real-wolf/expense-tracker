@@ -13,14 +13,37 @@ export class LoginComponent implements OnInit {
 
   public email: string;
   public password: string;
+  public passwordRepeat: string;
+  public arePasswordsMatching: boolean;
+  public isValidMailAddress: boolean;
 
-  ngOnInit() {}
+  public mode: "login" | "login-register" | "register" | "password-reset" = "login";
+
+  public ngOnInit() {
+
+  }
+
+  public changeMode(mode: "login" | "login-register" | "register" | "password-reset") {
+    this.mode = mode;
+  }
 
   public login() {
     this.router.navigateByUrl("/tabs");
   }
 
   public register() {
+    this.changeMode("login-register");
+  }
 
+  public changePassword() {
+
+  }
+
+  public checkPasswords() {
+    this.arePasswordsMatching = this.password == this.passwordRepeat;
+  }
+
+  public checkEmailAddress() {
+    this.isValidMailAddress = this.email.includes('@');
   }
 }

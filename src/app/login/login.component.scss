@@ -32,14 +32,19 @@
 }
 
 .big-heading {
-    /* font-family: "Heebo-Bold" !important; */
     font-size: 30px !important;
     color: var(--theme-black);
 }
 
-.small-heading {
-    /* font-family: "Heebo Regular" !important; */
+.margin-left-auto {
     margin-left: auto;
+}
+
+.margin-right-auto {
+    margin-right: auto;
+}
+
+.small-heading {
     padding-right: 40px;
     font-size: 15px;
 }
