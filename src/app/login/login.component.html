@@ -24,17 +24,17 @@
           <ion-input [(ngModel)]="password" placeholder="Password" type="password"></ion-input>
         </ion-item>
     
-        <ion-label class="forgot-password" (click)="changeMode('password-reset')">Forgot Password?</ion-label>
+        <ion-label class="forgot-password ion-padding-top link-button" (click)="changeMode('password-reset')">Forgot Password?</ion-label>
     
         <div class="linespace"></div>
     
         <ion-button color="primary" class="ion-button-class" shape="round" fill="solid" size="large" expand="block" (click)="login()">LOGIN</ion-button>
-        <ion-label class="ion-text-center">Don't have an Account? <span class="link-button" (click)="changeMode('register')">Sign Up</span></ion-label>  
+        <ion-label class="ion-text-center ion-padding-top">Don't have an Account? <span class="link-button" (click)="changeMode('register')">Sign Up</span></ion-label>  
       </ng-container>
 
       <ng-container *ngSwitchCase="'login-register'">
         <ion-label style="font-size: 20px;" class="ion-text-center">You have successfully registered!</ion-label>
-        <ion-label style="font-size: 20px;" class="ion-text-center">Return to <span style="color: blue; text-decoration: underline;" (click)="changeMode('login')">login</span></ion-label>
+        <ion-label style="font-size: 20px;" class="ion-text-center ion-padding-top">Return to <span class="link-button" (click)="changeMode('login')">login</span></ion-label>
       </ng-container>
 
       <ng-container *ngSwitchCase="'register'">
@@ -45,18 +45,18 @@
 
         <ion-item class="transparent">
           <ion-icon name="person-circle-outline"></ion-icon>
-          <ion-input [(ngModel)]="email" (ngModelChange)="checkEmailAddress()" placeholder="E-Mail" type="text"></ion-input>
+          <ion-input [(ngModel)]="email" (ngModelChange)="validateEmail()" placeholder="E-Mail" type="text"></ion-input>
         </ion-item>
         <ion-label *ngIf="!isValidMailAddress" color="danger">Please enter a valid E-Mail Address!</ion-label>
     
         <ion-item class="transparent">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <ion-input [(ngModel)]="password" (ngModelChange)="checkPasswords()" placeholder="Password" type="password"></ion-input>
+          <ion-input [(ngModel)]="password" (ngModelChange)="validatePasswords()" placeholder="Password" type="password"></ion-input>
         </ion-item>
   
         <ion-item class="transparent">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <ion-input [(ngModel)]="passwordRepeat" (ngModelChange)="checkPasswords()" placeholder="Repeat Password" type="password"></ion-input>
+          <ion-input [(ngModel)]="passwordRepeat" (ngModelChange)="validatePasswords()" placeholder="Repeat Password" type="password"></ion-input>
         </ion-item>
         <ion-label *ngIf="!arePasswordsMatching" color="danger">Passwords need to match!</ion-label>
       
@@ -66,18 +66,37 @@
       </ng-container>
 
       <ng-container *ngSwitchCase="'password-reset'">
-        <h2 class="big-heading">Change Your Password</h2>
+        <h2 class="big-heading">Enter your E-Mail address</h2>
 
         <ion-item class="transparent">
           <ion-icon name="person-circle-outline"></ion-icon>
-          <ion-input [(ngModel)]="email" (ngModelChange)="checkEmailAddress()" placeholder="E-Mail" type="text"></ion-input>
+          <ion-input [(ngModel)]="email" (ngModelChange)="validateEmail()" placeholder="E-Mail" type="text"></ion-input>
         </ion-item>
         <ion-label *ngIf="!isValidMailAddress" color="danger">Please enter a valid email!</ion-label>
         
         <div class="linespace"></div>
 
-        <ion-button [disabled]="!isValidMailAddress" color="primary" class="ion-button-class" shape="round" fill="solid" size="large" expand="block" (click)="changePassword()">CHANGE PASSWORD</ion-button>
-        <ion-label class="ion-text-center">Return to <span style="color: blue; text-decoration: underline;" (click)="changeMode('login')">login</span></ion-label>  
+        <ion-button [disabled]="!isValidMailAddress" color="primary" class="ion-button-class" shape="round" fill="solid" size="large" expand="block" (click)="changePassword()">CONFIRM</ion-button>
+        <ion-label class="ion-text-center ion-padding-top">Return to <span style="color: blue; text-decoration: underline;" (click)="changeMode('login')">login</span></ion-label>  
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'password-reset-confirm'">
+        <h2 class="big-heading">Change Your Password</h2>
+
+        <ion-item class="transparent">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <ion-input [(ngModel)]="password" (ngModelChange)="validatePasswords()" placeholder="Password" type="password"></ion-input>
+        </ion-item>
+  
+        <ion-item class="transparent">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <ion-input [(ngModel)]="passwordRepeat" (ngModelChange)="validatePasswords()" placeholder="Repeat Password" type="password"></ion-input>
+        </ion-item>
+        <ion-label *ngIf="!arePasswordsMatching" color="danger">Passwords need to match!</ion-label>
+      
+        <div class="linespace"></div>
+    
+        <ion-button [disabled]="!(arePasswordsMatching && isValidMailAddress)" color="primary" class="ion-button-class" shape="round" fill="solid" size="large" expand="block" (click)="resetPassword()">CHANGE PASSWORD</ion-button>
       </ng-container>
     </ng-container>
   </div>

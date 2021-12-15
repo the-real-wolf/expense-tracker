@@ -2,7 +2,7 @@
   <ion-menu side="start" menuId="first" contentId="content">  
     <ion-header>  
       <ion-toolbar color="theme">  
-        <ion-title>Expense Tracker</ion-title>  
+        <ion-title>Menu</ion-title>  
       </ion-toolbar>   
     </ion-header>  
     <ion-content color="light">  
@@ -10,11 +10,18 @@
         <ion-menu-toggle auto-hide="true">  
           <ion-item [routerLink]="pages.url" routerDirection="root">  
             <ion-icon [name]="pages.icon" slot="start"></ion-icon>  
-              {{pages.title}}   
+            {{pages.title}}   
           </ion-item>  
         </ion-menu-toggle>  
-      </ion-list>  
-    </ion-content>   
+      </ion-list>
+    </ion-content>
+
+    <ion-footer>
+      <ion-button (click)="logout()" color="danger" expand="block">  
+        <ion-icon name="log-out" slot="start"></ion-icon>  
+        Logout  
+      </ion-button>  
+    </ion-footer>
   </ion-menu>  
 
   <ion-router-outlet [id]="'content'"></ion-router-outlet>

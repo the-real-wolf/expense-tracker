@@ -2,16 +2,18 @@ import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab1Page } from './tab1.page';
-import { Tab1PageRoutingModule } from './tab1.routing';
+import { OverviewPageRoutingModule } from './overview.routing';
+import { OverviewPage } from './overview.page';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    Tab1PageRoutingModule
+    OverviewPageRoutingModule
   ],
-  declarations: [Tab1Page]
+  declarations: [
+    OverviewPage
+  ]
 })
-export class Tab1PageModule {}
+export class OverviewPageModule {}
