@@ -9,4 +9,17 @@
 </ion-header>
 
 <ion-content>
+  <ion-icon style="font-size: 130px; margin-left: 33%;" class="ion-text-center" name="person-circle-outline"></ion-icon>
+  <ion-item>
+    <ion-label>E-Mail</ion-label>
+    {{currentUser?.email}}
+  </ion-item>
+  <!-- <ion-label class="link-button forgot-password ion-padding-top" (click)="changeEmail()">Change E-Mail</ion-label> -->
+
+  <ion-item class="transparent">
+    <ion-label>Password</ion-label>
+    <span class="password-placeholder">PLACEHOLDER</span>
+  </ion-item>
+  <ion-label class="link-button forgot-password ion-padding-top" (click)="changeProfile()">Change Profile</ion-label>
+
 </ion-content>

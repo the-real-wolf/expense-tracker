@@ -8,7 +8,15 @@ const CLASS = "AppComponent";
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  styles: [`
+    .menu-logo {
+      position: absolute; 
+      width: 50%; 
+      left: 25%; 
+      bottom: 30%;
+    }
+  `]
 })
 export class AppComponent {
   constructor(

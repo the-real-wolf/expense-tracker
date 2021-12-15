@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BankAccountsPage } from './bank-accounts.page';
 import { BankAccountsRoutingModule } from './bank-accounts.routing';
+import { BankAccountsAddModalModule } from './bank-account-add-modal/bank-account-add.modal.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,9 @@ import { BankAccountsRoutingModule } from './bank-accounts.routing';
   ],
   declarations: [
     BankAccountsPage
+  ],
+  providers: [
+    BankAccountsAddModalModule
   ]
 })
 export class BankAccountsPageModule {}

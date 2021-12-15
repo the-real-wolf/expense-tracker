@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-toolbar color="theme">
+      <ion-title>Create Transaction</ion-title>
+      <ion-icon [style.fontSize.px]="40" name="close-outline" slot="end" (click)="closeModal()"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+    
+  <ion-content class="ion-padding">
+    <ion-item class="transparent">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <ion-input [(ngModel)]="date" (ngModelChange)="validateForm()" placeholder="Transaction Date *" type="date" required="true"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+      <ion-icon name="folder-open-outline"></ion-icon> <!-- Category Auswahlliste-->
+      <ion-input [(ngModel)]="categoryName" placeholder="Category" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+      <ion-icon name="cash-outline"></ion-icon>
+      <ion-input [(ngModel)]="amount" (ngModelChange)="validateForm()" placeholder="Amount *" type="number" required="true"></ion-input>
+    </ion-item>
+
+    <ion-list>
+      <ion-list-header>
+        <ion-label>Type</ion-label>
+      </ion-list-header>
+
+      <ion-radio-group [(ngModel)]="type">
+        <ion-item>
+          <ion-label>Expense</ion-label>
+          <ion-radio slot="start" value="expense"></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Income</ion-label>
+          <ion-radio slot="start" value="income"></ion-radio>
+        </ion-item>
+  
+      </ion-radio-group>
+    </ion-list>
+
+  </ion-content>
+  
+  <ion-footer>
+    <ion-button [disabled]="!formIsValid" (click)="saveModal()" color="success" expand="block">  
+      SAVE TRANSACTION  
+    </ion-button>  
+  </ion-footer>

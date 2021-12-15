@@ -9,4 +9,28 @@
 </ion-header>
 
 <ion-content>
+  <ion-card *ngFor="let bankAccount of bankAccounts">
+    <ion-item>
+      <ion-icon name="card" slot="start"></ion-icon>
+      <ion-label>{{bankAccount.bic}}</ion-label>
+      <ion-icon style="float: right; margin-right: 5px;" [style.fontSize.px]="25" name="settings-outline" color="dark" (click)="editBankAcccount(bankAccount.iban)"></ion-icon>
+      <ion-icon style="float: right;" [style.fontSize.px]="25" name="trash-outline" color="danger" (click)="showDeleteDialog(bankAccount.iban)"></ion-icon>  
+    
+    </ion-item>
+    <ion-card-header>
+      <ion-card-title>{{bankAccount.bankName}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-label>{{bankAccount.iban}}</ion-label>
+    </ion-card-content>
+  </ion-card>
+  
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="theme" (click)="createBankAccount()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

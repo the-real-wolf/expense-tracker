@@ -9,4 +9,34 @@
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label>Total Balance</ion-label>
+    <ion-label slot="end" [color]="totalBalance > 0 ? 'success' : totalBalance < 0 ? 'danger' : 'dark'">{{totalBalance | number: '.2-2' }} €</ion-label>
+  </ion-item>
+  
+  <div class="linespace"></div>
+
+  <ion-list>
+    <ion-card *ngFor="let transaction of transactions">
+      <ion-card-header>
+        <ion-card-subtitle>{{transaction.categoryName ? transaction.categoryName : 'Uncategorized'}}</ion-card-subtitle>
+        <ion-icon style="position: absolute; right: 20px; top: 20px;" [style.fontSize.px]="25" name="trash-outline" color="danger" (click)="showDeleteDialog(transaction.ident)"></ion-icon>  
+        <ion-icon style="position: absolute; right: 60px; top: 20px;" [style.fontSize.px]="25" name="settings-outline" color="dark" (click)="editTransaction(transaction.ident)"></ion-icon>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-label>{{transaction.date | date: 'EE dd.MM.yyyy'}}</ion-label>
+          <ion-label slot="end" [color]="transaction.type == 'income' ? 'success' : 'danger'">{{transaction.type == "income" ? '+' : '-'}} {{transaction.amount | number: '.2-2' }} €</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="theme" (click)="createTransaction()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

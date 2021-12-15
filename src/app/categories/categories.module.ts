@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CategoriesPageRoutingModule } from './categories.routing';
 import { CategoriesPage } from './categories.page';
-import { CategoryAddModalModule } from './dialogs/category-add-modal/category-add.module';
+import { CategoryAddModalModule } from './dialogs/category-add-modal/category-add-modal.module';
 
 @NgModule({
   imports: [

@@ -8,7 +8,7 @@
 <ion-content class="ion-padding">
   <ion-item class="transparent">
     <ion-icon name="folder-open-outline"></ion-icon>
-    <ion-input [(ngModel)]="name" placeholder="Category Name" type="text"></ion-input>
+    <ion-input [(ngModel)]="name" placeholder="Category Name*" type="text" required="true"></ion-input>
   </ion-item>
 
   <ion-item class="transparent">
@@ -18,7 +18,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button (click)="saveModal()" color="success" expand="block">  
+  <ion-button [disabled]="name == undefined" (click)="saveModal()" color="success" expand="block">  
     SAVE CATEGORY  
   </ion-button>  
 </ion-footer>

@@ -76,6 +76,7 @@ export class CategoryAddModal implements OnInit{
 
         this.saveDataToStorage(categories);
         this.closeModal();
+        this.toast.createSuccess("Category created successfully");
       } catch (error) {
         this.toast.createError(error);
       }

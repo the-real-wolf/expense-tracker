@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar color="theme">
+      <ion-title>Edit Profile</ion-title>
+      <ion-icon [style.fontSize.px]="40" name="close-outline" slot="end" (click)="closeModal()"></ion-icon>
+    </ion-toolbar>
+  </ion-header>
+    
+  <ion-content class="ion-padding">
+    <ion-item class="transparent">
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-input [(ngModel)]="email" (ngModelChange)="validateEmail()" placeholder="New E-Mail Address *" type="text" required="true"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <ion-input [(ngModel)]="currentPassword" (ngModelChange)="validateCurrentPassword()" placeholder="Current Password *" type="password" required="true"></ion-input>
+    </ion-item>
+    <ion-label *ngIf="!currentPasswordIsMatching" color="danger">Password is wrong!</ion-label>
+
+    <ion-item class="transparent">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <ion-input [(ngModel)]="newPassword" (ngModelChange)="validatePasswords()" placeholder="New Password" type="password" required="true"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <ion-input [(ngModel)]="newPasswordRepeat" (ngModelChange)="validatePasswords()" placeholder="Repeat New Password" type="password" required="true"></ion-input>
+    </ion-item>
+    <ion-label *ngIf="!arePasswordsMatching" color="danger">Passwords need to match!</ion-label>
+
+  </ion-content>
+  
+  <ion-footer>
+    <ion-button [disabled]="!currentPasswordIsMatching" (click)="saveModal()" color="success" expand="block">  
+      SAVE PROFILE  
+    </ion-button>  
+  </ion-footer>

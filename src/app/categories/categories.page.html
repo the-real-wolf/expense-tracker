@@ -12,9 +12,10 @@
   <ion-list>
     <ion-card *ngFor="let category of categories">
       <ion-card-header>
-        <ion-card-title>{{category.name}}
-        <ion-icon style="float: right;" [style.fontSize.px]="25" name="trash-outline" color="danger" (click)="showDeleteDialog(category.ident)"></ion-icon>  
-        <ion-icon style="float: right; margin-right: 5px;" [style.fontSize.px]="25" name="settings-outline" color="dark" (click)="editCategory(category.ident)"></ion-icon>
+        <ion-card-title>
+          {{category.name}}
+          <ion-icon style="float: right;" [style.fontSize.px]="25" name="trash-outline" color="danger" (click)="showDeleteDialog(category.ident)"></ion-icon>  
+          <ion-icon style="float: right; margin-right: 5px;" [style.fontSize.px]="25" name="settings-outline" color="dark" (click)="editCategory(category.ident)"></ion-icon>
         </ion-card-title>
       </ion-card-header>
       <ion-card-content>{{category.description}}</ion-card-content>

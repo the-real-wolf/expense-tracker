@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar color="theme">
+      <ion-title>Create Bank Account</ion-title>
+      <ion-icon [style.fontSize.px]="40" name="close-outline" slot="end" (click)="closeModal()"></ion-icon>
+    </ion-toolbar>
+</ion-header>
+    
+<ion-content class="ion-padding">
+    <ion-item class="transparent">
+        <ion-icon name="school-outline"></ion-icon>
+        <ion-input [(ngModel)]="bankName" placeholder="Bank Name *" type="text" required="true"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+        <ion-icon name="card-outline"></ion-icon>
+        <ion-input [(ngModel)]="iban" placeholder="IBAN *" type="text" required="true"></ion-input>
+    </ion-item>
+
+    <ion-item class="transparent">
+        <ion-icon name="key-outline"></ion-icon>
+        <ion-input [(ngModel)]="bic" placeholder="BIC *" type="text" required="true"></ion-input>
+    </ion-item>
+</ion-content>
+
+<ion-footer>
+    <ion-button [disabled]="bankName == undefined && iban == undefined && bic == undefined" (click)="saveModal()" color="success" expand="block">  
+        SAVE BANK ACCOUNT  
+    </ion-button>  
+</ion-footer>
