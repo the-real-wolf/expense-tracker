@@ -44,3 +44,10 @@ Installationsleitfaden:
 
    Nachdem das Skript läuft wird die Anwendung im Browser unter localhost:8100 geöffnet
 
+
+
+
+Anmerkungen zur Codebase:
+
+Alle relevante Dateien befinden sich im Ordner expense-tracker/src/app.
+
