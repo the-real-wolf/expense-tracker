@@ -47,7 +47,7 @@
           <ion-icon name="person-circle-outline"></ion-icon>
           <ion-input [(ngModel)]="email" (ngModelChange)="validateEmail()" placeholder="E-Mail" type="text"></ion-input>
         </ion-item>
-        <ion-label *ngIf="!isValidMailAddress" color="danger">Please enter a valid E-Mail Address!</ion-label>
+        <ion-label *ngIf="!isValidMailAddress" color="danger" class="validation-text">Please enter a valid E-Mail Address!</ion-label>
     
         <ion-item class="transparent">
           <ion-icon name="lock-closed-outline"></ion-icon>

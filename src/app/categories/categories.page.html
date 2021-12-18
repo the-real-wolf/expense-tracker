@@ -9,6 +9,14 @@
 </ion-header>
 
 <ion-content>
+  <ng-container *ngIf="categories.length < 1">
+    <ion-card color="tertiary" class="ion-padding">
+      <ion-label class="ion-text-wrap">
+        Looks like you haven't created your very first category yet. Consider creating it now!
+      </ion-label>
+    </ion-card>
+  </ng-container>
+
   <ion-list>
     <ion-card *ngFor="let category of categories">
       <ion-card-header>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
+import { User } from '../login/login.dtos';
 import { LoggerService } from './logger.service';
 import { ToastService } from './toast.service';
 
@@ -41,6 +42,17 @@ export class StorageService {
     try {
       await Storage.remove({ key: key });
       return this.getData(key) != undefined;
+    } catch (error) {
+      this.toast.createError(error);
+    }
+  }
+
+  public async getCurrentUserIdent(): Promise<string> {
+    this.logger.log(CLASS + ".getCurrentUser");
+    try {
+      let currentUserJson = await this.getData("currentUser");
+      let currentUser: User = JSON.parse(currentUserJson); 
+      return currentUser.ident;
     } catch (error) {
       this.toast.createError(error);
     }

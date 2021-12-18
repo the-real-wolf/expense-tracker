@@ -10,6 +10,7 @@
     <ion-icon name="folder-open-outline"></ion-icon>
     <ion-input [(ngModel)]="name" placeholder="Category Name*" type="text" required="true"></ion-input>
   </ion-item>
+  <ion-label *ngIf="!name" color="danger" class="validation-text">Please choose a name!</ion-label>
 
   <ion-item class="transparent">
     <ion-icon [style.paddingTop.px]="10" name="book-outline"></ion-icon>

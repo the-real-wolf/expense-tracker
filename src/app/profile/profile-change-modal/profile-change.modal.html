@@ -6,17 +6,21 @@
   </ion-header>
     
   <ion-content class="ion-padding">
+
+    <h3>Change Your E-Mail Address</h3>
     <ion-item class="transparent">
         <ion-icon name="mail-outline"></ion-icon>
         <ion-input [(ngModel)]="email" (ngModelChange)="validateEmail()" placeholder="New E-Mail Address *" type="text" required="true"></ion-input>
     </ion-item>
+    <ion-label *ngIf="!isValidMailAddress" color="danger" class="validation-text">Please enter a valid E-Mail Address!</ion-label>
 
     <ion-item class="transparent">
         <ion-icon name="lock-closed-outline"></ion-icon>
         <ion-input [(ngModel)]="currentPassword" (ngModelChange)="validateCurrentPassword()" placeholder="Current Password *" type="password" required="true"></ion-input>
     </ion-item>
-    <ion-label *ngIf="!currentPasswordIsMatching" color="danger">Password is wrong!</ion-label>
+    <ion-label *ngIf="!currentPasswordIsMatching" color="danger" class="validation-text">Password is wrong!</ion-label>
 
+    <h3>Change Your Password</h3>
     <ion-item class="transparent">
         <ion-icon name="lock-closed-outline"></ion-icon>
         <ion-input [(ngModel)]="newPassword" (ngModelChange)="validatePasswords()" placeholder="New Password" type="password" required="true"></ion-input>
@@ -26,7 +30,7 @@
         <ion-icon name="lock-closed-outline"></ion-icon>
         <ion-input [(ngModel)]="newPasswordRepeat" (ngModelChange)="validatePasswords()" placeholder="Repeat New Password" type="password" required="true"></ion-input>
     </ion-item>
-    <ion-label *ngIf="!arePasswordsMatching" color="danger">Passwords need to match!</ion-label>
+    <ion-label *ngIf="!arePasswordsMatching" color="danger" class="validation-text">Passwords need to match!</ion-label>
 
   </ion-content>
   

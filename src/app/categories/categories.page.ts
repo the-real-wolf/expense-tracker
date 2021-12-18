@@ -23,7 +23,10 @@ export class CategoriesPage implements OnInit {
 
   public categories: Array<Category> = new Array<Category>();
 
-  public ngOnInit() {
+  private userIdent: string;
+
+  public async ngOnInit() {
+    this.userIdent = await this.storage.getCurrentUserIdent();
     this.load();
   }
 
@@ -31,7 +34,11 @@ export class CategoriesPage implements OnInit {
     this.logger.log(CLASS + ".load");
     try {
       let categoriesJson = await this.storage.getData("categories");
-      this.categories = JSON.parse(categoriesJson);
+      let categories: Array<Category> = JSON.parse(categoriesJson);
+      
+      if(categories) {
+        this.categories = categories.filter(category => category.userIdent == this.userIdent);
+      }
     } catch (error) {
       this.toast.createError(error);
     }
@@ -99,12 +106,14 @@ export class CategoriesPage implements OnInit {
 
   private async deleteCategory(ident: string) {
     try {
-      let categoryToDelete = this.categories.find(category => category.ident == ident);
-      let indexToDelete = this.categories.indexOf(categoryToDelete, 0);
+      let categoriesJson = await this.storage.getData("categories");
+      let categories: Array<Category> = JSON.parse(categoriesJson);
+      let categoryToDelete = categories.find(category => category.ident == ident);
+      let indexToDelete = categories.indexOf(categoryToDelete, 0);
       
       if(indexToDelete > -1) {
-        this.categories.splice(indexToDelete, 1);
-        this.storage.setData("categories", JSON.stringify(this.categories));
+        categories.splice(indexToDelete, 1);
+        this.storage.setData("categories", JSON.stringify(categories));
         this.load();
       } else {
         this.toast.createError("Item not found!");

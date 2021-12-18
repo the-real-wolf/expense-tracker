@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ModalController, NavParams } from "@ionic/angular";
+import { Transaction } from "../../overview/overview.dtos";
 import { LoggerService } from "../../services/logger.service";
 import { StorageService } from "../../services/storage.service";
 import { ToastService } from "../../services/toast.service";
@@ -40,6 +41,7 @@ export class BankAccountAddModal implements OnInit{
     public bic: string;
     
     private isEditMode: boolean = false;
+    private ibanBackUp: string;
 
     public async ngOnInit() {
       this.iban = this.navParams.data.iban;
@@ -51,6 +53,7 @@ export class BankAccountAddModal implements OnInit{
         if(bankAccount) {
           this.bankName = bankAccount.bankName;
           this.iban = bankAccount.iban;
+          this.ibanBackUp = bankAccount.iban;
           this.bic = bankAccount.bic;
           this.isEditMode = true;
         }
@@ -60,25 +63,28 @@ export class BankAccountAddModal implements OnInit{
     public async saveModal() {
       this.logger.log(CLASS + ".saveModal");
       try {
+        let userIdent = await this.storage.getCurrentUserIdent();
         let bankAccountsJson = await this.storage.getData("bankaccounts");
         let existingBankAccounts = JSON.parse(bankAccountsJson);
         let bankAccounts: Array<BankAccount> = existingBankAccounts ?? new Array<BankAccount>();
 
         if(this.isEditMode) {
-          let bankAccount = bankAccounts.find(bankAccount => bankAccount.iban == this.iban);
+          let bankAccount = bankAccounts.find(bankAccount => bankAccount.iban == this.ibanBackUp);
 
           if(bankAccount) {
+            this.updateAllTransactions(bankAccount.bankName);
             bankAccount.bankName = this.bankName;
             bankAccount.iban = this.iban;
             bankAccount.bic = this.bic;
           }
+          this.toast.createSuccess("Bank Account edited successfully");
         } else {
-            bankAccounts.push(new BankAccount(this.bankName, this.iban, this.bic));
+            bankAccounts.push(new BankAccount(this.bankName, this.iban, this.bic, userIdent));
+            this.toast.createSuccess("Bank Account created successfully");
         }
 
         this.saveDataToStorage(bankAccounts);
         this.closeModal();
-        this.toast.createSuccess("Bank Account created successfully");
       } catch (error) {
         this.toast.createError(error);
       }
@@ -91,5 +97,24 @@ export class BankAccountAddModal implements OnInit{
     public async closeModal() {
       this.logger.log(CLASS + ".closeModal");
       await this.modalController.dismiss();
+    }
+
+    private async updateAllTransactions(oldBankName: string) {
+      this.logger.log(CLASS + ".updateAllTransactions");
+      try {
+        let userIdent = await this.storage.getCurrentUserIdent();
+        let transactionsJson = await this.storage.getData("transactions");
+        let transactions: Array<Transaction> = JSON.parse(transactionsJson);
+        let transactionsOfUser: Array<Transaction> = transactions.filter(transaction => transaction.bankAccountName == oldBankName && transaction.userIdent == userIdent);
+        
+        for(let transaction of transactionsOfUser) {
+          let transactionToModify = transactions.find(obj => obj.ident == transaction.ident);
+          transactionToModify.bankAccountName = this.bankName;
+        }
+
+        await this.storage.setData("transactions", JSON.stringify(transactions));
+      } catch (error) {
+        this.toast.createError(error);
+      }
     }
 }

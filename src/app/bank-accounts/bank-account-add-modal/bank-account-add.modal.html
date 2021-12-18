@@ -10,16 +10,19 @@
         <ion-icon name="school-outline"></ion-icon>
         <ion-input [(ngModel)]="bankName" placeholder="Bank Name *" type="text" required="true"></ion-input>
     </ion-item>
+    <ion-label *ngIf="!bankName" color="danger" class="validation-text">Please choose a valid bank name!</ion-label>
 
     <ion-item class="transparent">
         <ion-icon name="card-outline"></ion-icon>
         <ion-input [(ngModel)]="iban" placeholder="IBAN *" type="text" required="true"></ion-input>
     </ion-item>
+    <ion-label *ngIf="!iban" color="danger" class="validation-text">Please choose a valid IBAN!</ion-label>
 
     <ion-item class="transparent">
         <ion-icon name="key-outline"></ion-icon>
         <ion-input [(ngModel)]="bic" placeholder="BIC *" type="text" required="true"></ion-input>
     </ion-item>
+    <ion-label *ngIf="!bic" color="danger" class="validation-text">Please choose a valid BIC!</ion-label>
 </ion-content>
 
 <ion-footer>

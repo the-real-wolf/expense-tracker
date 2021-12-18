@@ -10,7 +10,7 @@ const CLASS = "ProfilePage";
 
 @Component({
   selector: 'profile',
-  templateUrl: './profile.page.html',
+  templateUrl: 'profile.page.html',
   styles: [`
     .password-placeholder {
       -webkit-text-security: disc; 

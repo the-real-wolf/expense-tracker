@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ViewWillEnter } from '@ionic/angular';
+import { Transaction } from '../overview/overview.dtos';
 import { LoggerService } from '../services/logger.service';
 import { StorageService } from '../services/storage.service';
 import { ToastService } from '../services/toast.service';
@@ -12,7 +13,7 @@ const CLASS = "BankAccountsPage";
   selector: 'bank-accounts',
   templateUrl: 'bank-accounts.page.html'
 })
-export class BankAccountsPage implements OnInit {
+export class BankAccountsPage implements ViewWillEnter {
   constructor(
     private readonly logger: LoggerService,
     private readonly storage: StorageService,
@@ -23,7 +24,10 @@ export class BankAccountsPage implements OnInit {
 
   public bankAccounts: Array<BankAccount> = new Array<BankAccount>();
 
-  public ngOnInit() {
+  private userIdent: string;
+
+  public async ionViewWillEnter() {
+    this.userIdent = await this.storage.getCurrentUserIdent();
     this.load();
   }
 
@@ -31,7 +35,10 @@ export class BankAccountsPage implements OnInit {
     this.logger.log(CLASS + ".load");
     try {
       let bankAccountsJson = await this.storage.getData("bankaccounts");
-      this.bankAccounts = JSON.parse(bankAccountsJson);
+      let bankAccounts: Array<BankAccount> = JSON.parse(bankAccountsJson);
+      if(bankAccounts) {
+        this.bankAccounts = bankAccounts.filter(bankAccount => bankAccount.userIdent == this.userIdent);
+      }
     } catch (error) {
       this.toast.createError(error);
     }
@@ -78,7 +85,7 @@ export class BankAccountsPage implements OnInit {
     this.logger.log(CLASS + ".showDeleteDialog");
     const alert = await this.alertCtrl.create({
       header: 'Delete Bank Account',
-      message: 'Are you sure you want to delete the bank account?',
+      message: 'Deleting your bank account automatically deletes all connected transactions. Are you sure you want to delete your bank account? ',
       buttons: [
         {
           text: 'CANCEL',
@@ -99,16 +106,39 @@ export class BankAccountsPage implements OnInit {
 
   private async deleteBankAccount(iban: string) {
     try {
-      let bankAccountToDelete = this.bankAccounts.find(bankAccount => bankAccount.iban == iban);
-      let indexToDelete = this.bankAccounts.indexOf(bankAccountToDelete, 0);
+      let bankAccountsJson = await this.storage.getData("bankaccounts");
+      let bankAccounts: Array<BankAccount> = JSON.parse(bankAccountsJson);
+      let bankAccountToDelete = bankAccounts.find(bankAccount => bankAccount.iban == iban);
+      let indexToDelete = bankAccounts.indexOf(bankAccountToDelete, 0);
       
       if(indexToDelete > -1) {
-        this.bankAccounts.splice(indexToDelete, 1);
-        this.storage.setData("bankaccounts", JSON.stringify(this.bankAccounts));
+        bankAccounts.splice(indexToDelete, 1);
+        this.storage.setData("bankaccounts", JSON.stringify(bankAccounts));
+        await this.deleteAllTransactions(bankAccountToDelete.bankName);
         this.load();
       } else {
         this.toast.createError("Item not found!");
       }
+    } catch (error) {
+      this.toast.createError(error);
+    }
+  }
+
+  private async deleteAllTransactions(bankAccountName: string) {
+    this.logger.log(CLASS + ".deleteAllTransactions");
+    try {
+      let transactionsJson = await this.storage.getData("transactions");
+      let transactions: Array<Transaction> = JSON.parse(transactionsJson);
+      let transactionsToDelete = transactions.filter(transaction => transaction.bankAccountName == bankAccountName && transaction.userIdent == this.userIdent);
+      
+      for(let transaction of transactionsToDelete) {
+        let indexToDelete = transactions.indexOf(transaction, 0);
+        if(indexToDelete > -1) {
+          transactions.splice(indexToDelete, 1);
+        }
+      }
+
+      this.storage.setData("transactions", JSON.stringify(transactions));
     } catch (error) {
       this.toast.createError(error);
     }

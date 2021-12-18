@@ -33,7 +33,7 @@ export class ToastService {
         const toast = await this.toastCtrl.create({
             message: message,
             color: color,
-            duration: 4000
+            duration: 2000
         });
 
         toast.present();

@@ -41,7 +41,7 @@ export class AppComponent {
       { 
         title : 'Overview',
         url   : '/tabs/overview',
-        icon  : 'home-outline' 
+        icon  : 'cash-outline' 
       },   
       {  
         title : 'Categories',  
@@ -51,7 +51,7 @@ export class AppComponent {
       {  
         title : 'Bank Accounts',  
         url   : '/tabs/bankaccounts',  
-        icon  : 'wallet-outline'   
+        icon  : 'card-outline'   
       }
     ];  
   } 

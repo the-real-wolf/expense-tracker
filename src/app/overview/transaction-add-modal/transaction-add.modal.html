@@ -6,20 +6,33 @@
   </ion-header>
     
   <ion-content class="ion-padding">
+
     <ion-item class="transparent">
       <ion-icon name="calendar-outline"></ion-icon>
       <ion-input [(ngModel)]="date" (ngModelChange)="validateForm()" placeholder="Transaction Date *" type="date" required="true"></ion-input>
     </ion-item>
+    <ion-label *ngIf="!date" color="danger" class="validation-text">Please enter a valid Date!</ion-label>
 
     <ion-item class="transparent">
-      <ion-icon name="folder-open-outline"></ion-icon> <!-- Category Auswahlliste-->
-      <ion-input [(ngModel)]="categoryName" placeholder="Category" type="text"></ion-input>
+      <ion-icon name="folder-open-outline"></ion-icon>
+      <ion-select okText="SELECT" cancelText="CANCEL" [(ngModel)]="categoryName" placeholder="Category" name="Categories">
+        <ion-select-option *ngFor="let categorySelectItem of categorySelectItems" [value]="categorySelectItem.text">{{categorySelectItem.text}}</ion-select-option>
+      </ion-select>
     </ion-item>
+
+    <ion-item class="transparent">
+      <ion-icon name="card-outline"></ion-icon>
+      <ion-select okText="SELECT" cancelText="CANCEL" [(ngModel)]="bankAccountName" (ngModelChange)="validateForm()" placeholder="Bank Account *" name="Bank-Accounts" required="true">
+        <ion-select-option *ngFor="let bankAccountSelectItem of bankAccountSelectItems" [value]="bankAccountSelectItem.text">{{bankAccountSelectItem.text}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-label *ngIf="!bankAccountName" color="danger" class="validation-text">Please choose a bank account!</ion-label>
 
     <ion-item class="transparent">
       <ion-icon name="cash-outline"></ion-icon>
       <ion-input [(ngModel)]="amount" (ngModelChange)="validateForm()" placeholder="Amount *" type="number" required="true"></ion-input>
     </ion-item>
+    <ion-label *ngIf="!amount" color="danger" class="validation-text">Please choose the transaction amount!</ion-label>
 
     <ion-list>
       <ion-list-header>

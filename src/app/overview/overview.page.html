@@ -9,11 +9,28 @@
 </ion-header>
 
 <ion-content>
+
   <ion-item>
     <ion-label>Total Balance</ion-label>
     <ion-label slot="end" [color]="totalBalance > 0 ? 'success' : totalBalance < 0 ? 'danger' : 'dark'">{{totalBalance | number: '.2-2' }} €</ion-label>
   </ion-item>
   
+  <ng-container *ngIf="!selectedBankAccount">
+    <ion-card color="theme" class="ion-padding">
+      <ion-label class="ion-text-wrap">
+        In order to create transactions you first need to specify a bank account! <a (click)="navigateToBankAccounts()">Create a bank account</a>.
+      </ion-label>
+    </ion-card>
+  </ng-container>
+
+  <ng-container *ngIf="selectedBankAccount && transactions.length < 1">
+    <ion-card color="tertiary" class="ion-padding">
+      <ion-label class="ion-text-wrap">
+        Looks like you haven't created your very first transaction yet. Consider creating it now!
+      </ion-label>
+    </ion-card>
+  </ng-container>
+
   <div class="linespace"></div>
 
   <ion-list>
@@ -40,3 +57,12 @@
   </ion-fab>
 
 </ion-content>
+
+<ion-footer>
+  <ion-item>
+    <ion-label>Bank Account</ion-label>
+    <ion-select okText="SELECT" cancelText="CANCEL" slot="end" [(ngModel)]="selectedBankAccount" (ngModelChange)="refresh()" name="Bank-Accounts">
+      <ion-select-option *ngFor="let bankAccountSelectItem of bankAccountSelectItems" [value]="bankAccountSelectItem.text">{{bankAccountSelectItem.text}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-footer>

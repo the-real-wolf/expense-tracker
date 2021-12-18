@@ -59,6 +59,7 @@ export class CategoryAddModal implements OnInit{
     public async saveModal() {
       this.logger.log(CLASS + ".saveModal");
       try {
+        let userIdent = await this.storage.getCurrentUserIdent();
         let categoriesJson = await this.storage.getData("categories");
         let existingCategories = JSON.parse(categoriesJson);
         let categories: Array<Category> = existingCategories ?? new Array<Category>();
@@ -70,13 +71,14 @@ export class CategoryAddModal implements OnInit{
             category.name = this.name;
             category.description = this.description;
           }
+          this.toast.createSuccess("Category edited successfully");
         } else {
-          categories.push(new Category(this.name, this.description));
+          categories.push(new Category(this.name, this.description, userIdent));
+          this.toast.createSuccess("Category created successfully");
         }
 
         this.saveDataToStorage(categories);
         this.closeModal();
-        this.toast.createSuccess("Category created successfully");
       } catch (error) {
         this.toast.createError(error);
       }
